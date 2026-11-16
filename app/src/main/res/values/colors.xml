@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common Dark Theme Colors -->
+    <color name="bg_dark">#0b1712</color>
+    <color name="card_dark">#12261d</color>
+    <color name="card_border">#3334d399</color>
+    <color name="text_main">#f0fdf4</color>
+    <color name="text_muted">#86efac</color>
+    <color name="text_sub">#a7f3d0</color>
+    <color name="accent_primary">#10b981</color>
+    <color name="accent_hover">#059669</color>
+    <color name="accent_light">#3310b981</color>
+    <color name="ring_bg">#14ffffff</color>
+    <color name="input_bg">#18000000</color>
+    <color name="input_border">#2e34d399</color>
+
+    <!-- Forest Zen -->
+    <color name="forest_primary">#10b981</color>
+    <color name="forest_bg">#0b1712</color>
+    <color name="forest_card">#12261d</color>
+    <color name="forest_border">#3334d399</color>
+
+    <!-- Rain -->
+    <color name="rain_primary">#38bdf8</color>
+    <color name="rain_bg">#0c121e</color>
+    <color name="rain_card">#152033</color>
+    <color name="rain_border">#3860a5fa</color>
+
+    <!-- Sunset -->
+    <color name="sunset_primary">#fb923c</color>
+    <color name="sunset_bg">#1c0f16</color>
+    <color name="sunset_card">#2b141f</color>
+    <color name="sunset_border">#40fb923c</color>
+
+    <!-- Midnight -->
+    <color name="midnight_primary">#a855f7</color>
+    <color name="midnight_bg">#070714</color>
+    <color name="midnight_card">#181230</color>
+    <color name="midnight_border">#40a855f7</color>
+
+    <!-- Minimal -->
+    <color name="minimal_primary">#e5e5e5</color>
+    <color name="minimal_bg">#111111</color>
+    <color name="minimal_card">#1c1c1c</color>
+    <color name="minimal_border">#24ffffff</color>
+
+    <!-- Status & UI Neutrals -->
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="chip_inactive_bg">#16ffffff</color>
+    <color name="chip_inactive_border">#24ffffff</color>
+    <color name="badge_bg">#2010b981</color>
+    <color name="badge_streak_bg">#2efb923c</color>
+    <color name="danger_red">#f43f5e</color>
+    <color name="danger_red_bg">#26f43f5e</color>
+</resources>

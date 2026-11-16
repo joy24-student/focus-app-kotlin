@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Focus Mood</string>
+    <string name="logo_title">FocusMood</string>
+    <string name="tagline">Designed for peaceful productivity</string>
+    <string name="mood_forest">🌿 Forest</string>
+    <string name="mood_rain">🌧️ Rain</string>
+    <string name="mood_sunset">🌅 Sunset</string>
+    <string name="mood_midnight">🌌 Midnight</string>
+    <string name="mood_minimal">⚡ Minimal</string>
+    <string name="tab_focus">Focus (25m)</string>
+    <string name="tab_short">Short (5m)</string>
+    <string name="tab_long">Long (15m)</string>
+    <string name="btn_start">▶ Start</string>
+    <string name="btn_pause">⏸ Pause</string>
+    <string name="btn_reset">↺ Reset</string>
+    <string name="btn_skip">⏭ Next</string>
+    <string name="btn_add">+ Add</string>
+    <string name="btn_upload">+ Upload MP3</string>
+    <string name="card_todo_title">📋 To-Do Tasks</string>
+    <string name="card_activity_title">📊 Daywise Activity</string>
+    <string name="card_audio_title">🎵 Custom MP3 Player</string>
+    <string name="notification_channel_id">focus_mood_channel</string>
+    <string name="notification_channel_name">Focus Mood Timer Alerts</string>
+</resources>

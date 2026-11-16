@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/item_background"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="10dp">
+
+    <!-- Checkbox Toggle -->
+    <TextView
+        android:id="@+id/tvTaskCheck"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:background="@drawable/chip_background"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/accent_primary"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <!-- Task Text -->
+    <TextView
+        android:id="@+id/tvTaskText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:text="Task description"
+        android:textColor="@color/text_main"
+        android:textSize="14sp" />
+
+    <!-- Action Buttons -->
+    <TextView
+        android:id="@+id/btnTaskFocus"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="🎯"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/btnTaskDelete"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="✕"
+        android:textColor="@color/text_muted"
+        android:textSize="15sp" />
+</LinearLayout>
