@@ -13,8 +13,9 @@ mkdir -p build/gen build/compiled build/classes build/dex
 echo "==> 1. Compiling Android Resources with AAPT2..."
 aapt2 compile --dir app/src/main/res -o build/compiled/res.zip
 
-echo "==> 2. Linking Resources and generating R.java (Target SDK 34, Min SDK 24)..."
+echo "==> 2. Linking Resources, Assets and generating R.java (Target SDK 34, Min SDK 24)..."
 aapt2 link -I "$SDK_JAR" \
+    -A app/src/main/assets \
     --manifest app/src/main/AndroidManifest.xml \
     --min-sdk-version 24 \
     --target-sdk-version 34 \

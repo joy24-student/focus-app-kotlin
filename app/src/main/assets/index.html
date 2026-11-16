@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="theme-color" content="#0b1712" id="themeColorMeta" />
+  <title>Focus Mood - Distraction-Free Workspace</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-mood="forest">
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <div class="app-container">
+    <!-- Top Bar: Mood Selector & Utility -->
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        <h1>Focus<span>Mood</span></h1>
+      </div>
+
+      <div class="mood-selector">
+        <span class="mood-label">Mood:</span>
+        <button class="mood-chip active" data-set-mood="forest" title="Forest Zen">🌿 Forest</button>
+        <button class="mood-chip" data-set-mood="rain" title="Rainy Cafe">🌧️ Rain</button>
+        <button class="mood-chip" data-set-mood="sunset" title="Warm Sunset">🌅 Sunset</button>
+        <button class="mood-chip" data-set-mood="midnight" title="Midnight Deep">🌌 Midnight</button>
+        <button class="mood-chip" data-set-mood="minimal" title="Monochrome Focus">⚡ Minimal</button>
+      </div>
+
+      <div class="header-actions">
+        <button id="notifyBtn" class="icon-btn" title="Enable System Notifications" aria-label="Enable System Notifications">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+          <span class="notify-badge-dot" id="notifyBadgeDot"></span>
+        </button>
+        <button id="fullscreenBtn" class="icon-btn" title="Toggle Fullscreen" aria-label="Toggle Fullscreen">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace with 2 Tabs -->
+    <main class="focus-dashboard">
+
+      <!-- TAB 1: HOME VIEW -->
+      <div id="tabHomeView" class="tab-view-container active">
+        <!-- Left / Center: Focus Timer -->
+        <section class="card timer-card">
+          <!-- Timer Modes + Settings button -->
+          <div class="timer-tabs-wrap">
+            <div class="timer-tabs">
+              <button class="tab-btn active" data-mode="focus" id="tabFocus">Focus (25m)</button>
+              <button class="tab-btn" data-mode="shortBreak" id="tabShort">Short (5m)</button>
+              <button class="tab-btn" data-mode="longBreak" id="tabLong">Long (15m)</button>
+            </div>
+            <button id="customTimerBtn" class="tab-btn-settings" title="Set Custom Timer" aria-label="Set Custom Timer">
+              ⚙️
+            </button>
+          </div>
+
+          <!-- Timer Circular Display -->
+          <div class="clock-display-wrap" id="clockDisplayWrap" title="Click to customize duration">
+            <svg class="progress-ring" viewBox="0 0 300 300">
+              <circle class="ring-bg" cx="150" cy="150" r="130" />
+              <circle class="ring-progress" id="progressRing" cx="150" cy="150" r="130" />
+            </svg>
+            <div class="time-text-box">
+              <div id="timeDisplay" class="time-number">25:00</div>
+              <div id="modeStatus" class="mode-status">Ready to focus</div>
+              <div class="tap-hint">tap time to customize</div>
+            </div>
+          </div>
+
+          <!-- Active Focus Task Pill on Timer -->
+          <div class="active-focus-task-pill hidden" id="timerActiveTaskPill">
+            <span class="pill-icon">🎯</span>
+            <span class="pill-text" id="timerActiveTaskText">No active task selected</span>
+            <button type="button" id="unfocusTaskBtn" class="pill-remove-btn" title="Unlink Task">✕</button>
+          </div>
+
+          <!-- Quick Minute Adjuster Bar -->
+          <div class="quick-adjust-bar">
+            <button class="quick-adj-btn" data-delta="-5" title="Subtract 5 minutes">-5m</button>
+            <button class="quick-adj-btn" data-delta="-1" title="Subtract 1 minute">-1m</button>
+            <span class="quick-adj-label">Adjust</span>
+            <button class="quick-adj-btn" data-delta="1" title="Add 1 minute">+1m</button>
+            <button class="quick-adj-btn" data-delta="5" title="Add 5 minutes">+5m</button>
+          </div>
+
+          <!-- Primary Controls -->
+          <div class="timer-controls">
+            <button id="startPauseBtn" class="btn btn-primary">
+              <span class="icon">▶</span>
+              <span id="startPauseText">Start</span>
+            </button>
+            <button id="resetBtn" class="btn btn-secondary" title="Reset Timer">
+              ↺ Reset
+            </button>
+            <button id="skipBtn" class="btn btn-subtle" title="Skip Session">
+              ⏭ Next
+            </button>
+          </div>
+
+          <!-- Stats / Streaks Preview -->
+          <div class="session-stats">
+            <div class="stat-item">
+              <span class="stat-value" id="todaySessionsDisplay">0</span>
+              <span class="stat-label">Today's Sessions</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-value" id="todayMinutesDisplay">0m</span>
+              <span class="stat-label">Today's Focus</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-value" id="allTimeMinutesDisplay">0m</span>
+              <span class="stat-label">All-Time</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Panel: To-Do Tasks, MP3 Player & Quote -->
+        <section class="sidebar-panel">
+          <!-- To-Do Task List Card -->
+          <div class="card todo-card">
+            <div class="card-header">
+              <div class="header-with-badge">
+                <h3>📋 To-Do Tasks</h3>
+                <span class="badge" id="todoProgressBadge">0 / 0 done</span>
+              </div>
+            </div>
+
+            <!-- Progress track -->
+            <div class="todo-progress-track">
+              <div class="todo-progress-fill" id="todoProgressFill" style="width: 0%;"></div>
+            </div>
+
+            <!-- Add Task Form -->
+            <form id="todoForm" class="todo-form">
+              <input 
+                type="text" 
+                id="todoInput" 
+                placeholder="Add a new task..." 
+                maxlength="100" 
+                autocomplete="off" 
+                required
+              />
+              <button type="submit" class="btn btn-action" title="Add Task">+ Add</button>
+            </form>
+
+            <!-- Filter Pills -->
+            <div class="todo-filters">
+              <button type="button" class="filter-chip active" data-filter="all" id="filterAll">All (0)</button>
+              <button type="button" class="filter-chip" data-filter="active" id="filterActive">Active (0)</button>
+              <button type="button" class="filter-chip" data-filter="completed" id="filterCompleted">Done (0)</button>
+            </div>
+
+            <!-- Tasks List Container -->
+            <div class="todo-list" id="todoList">
+              <!-- Dynamically populated tasks -->
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="todo-footer">
+              <span class="todo-hint-text">💡 Tap 🎯 on a task to link it to the timer</span>
+              <button type="button" id="clearCompletedBtn" class="btn-clear-tasks hidden">Clear Done</button>
+            </div>
+          </div>
+
+          <!-- Custom MP3 Music Player Card (LocalStorage Persistence) -->
+          <div class="card audio-card">
+            <div class="card-header">
+              <div class="header-with-badge">
+                <h3>🎵 Custom MP3 Player</h3>
+                <span class="badge" id="storageUsageBadge">0 KB</span>
+              </div>
+              <label for="mp3FileInput" class="btn btn-action upload-btn" title="Upload MP3 Audio Files">
+                <span>+ Upload MP3</span>
+              </label>
+              <input type="file" id="mp3FileInput" accept="audio/*,.mp3,.wav,.ogg,.m4a" multiple class="hidden-file-input" />
+            </div>
+            <p class="sound-desc">Upload your own MP3 songs. All files are saved locally so you can easily change songs and listen offline.</p>
+
+            <!-- Now Playing Card -->
+            <div class="now-playing-panel">
+              <div class="now-playing-row">
+                <div class="equalizer-icon" id="equalizerAnim">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="now-playing-info">
+                  <div class="track-title" id="nowPlayingTitle">No song selected</div>
+                  <div class="track-status" id="nowPlayingStatus">Upload or select a track below</div>
+                </div>
+              </div>
+
+              <!-- Progress Scrub Bar -->
+              <div class="audio-progress-container">
+                <span class="audio-time" id="audioCurrentTime">0:00</span>
+                <div class="audio-seek-wrapper">
+                  <input type="range" id="audioSeekBar" min="0" max="100" value="0" step="0.1" aria-label="Audio progress scrub" />
+                </div>
+                <span class="audio-time" id="audioTotalDuration">0:00</span>
+              </div>
+
+              <!-- Playback Controls -->
+              <div class="audio-controls-row">
+                <button type="button" id="prevTrackBtn" class="audio-ctrl-btn" title="Previous Song (⏮)" aria-label="Previous Track">⏮</button>
+                <button type="button" id="playPauseTrackBtn" class="audio-ctrl-btn play-main-btn" title="Play / Pause" aria-label="Play or Pause">
+                  <span id="playPauseIcon">▶</span>
+                </button>
+                <button type="button" id="nextTrackBtn" class="audio-ctrl-btn" title="Next Song (⏭)" aria-label="Next Track">⏭</button>
+                <button type="button" id="loopTrackBtn" class="audio-ctrl-btn loop-btn active" data-loop="all" title="Repeat: All" aria-label="Repeat Mode">🔁</button>
+              </div>
+            </div>
+
+            <!-- Volume Slider -->
+            <div class="volume-control">
+              <button type="button" id="muteToggleBtn" class="vol-btn" title="Mute/Unmute" aria-label="Mute or Unmute">🔉</button>
+              <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.7" aria-label="Volume Slider" />
+              <span class="vol-icon">🔊</span>
+            </div>
+
+            <!-- Playlist / Song Switcher Section -->
+            <div class="playlist-section">
+              <div class="playlist-header">
+                <span class="playlist-title">Your Songs (<span id="trackCountLabel">0</span>)</span>
+                <button type="button" id="clearAllTracksBtn" class="btn-clear-tracks hidden" title="Remove all uploaded tracks">Clear All</button>
+              </div>
+              <div class="playlist-list" id="playlistList">
+                <!-- Dynamically populated songs -->
+              </div>
+            </div>
+
+            <audio id="customAudioElement" preload="auto"></audio>
+          </div>
+
+          <!-- Inspirational Prompt -->
+          <div class="card quote-card">
+            <p id="moodQuote" class="quote-text">"Deep focus is an act of self-care for your mind."</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- TAB 2: HISTORY VIEW -->
+      <div id="tabHistoryView" class="tab-view-container hidden">
+        <div class="card daily-tracker-card full-history-card">
+          <div class="card-header">
+            <div class="header-with-badge">
+              <h3>📊 Daywise Activity &amp; Statistics</h3>
+              <span class="badge streak-badge" id="streakBadge">🔥 0 Day Streak</span>
+            </div>
+          </div>
+
+          <!-- 7-Day Visual Activity Bar Chart -->
+          <div class="chart-section">
+            <div class="chart-header-row">
+              <span class="chart-subtitle">Last 7 Days (Minutes)</span>
+              <span class="chart-summary-stat" id="weeklyTotalText">Week: 0m</span>
+            </div>
+            <div class="activity-bars-grid" id="activityBarsGrid">
+              <!-- Dynamically rendered bars -->
+            </div>
+          </div>
+
+          <!-- Stats Summary Grid -->
+          <div class="history-stats-grid">
+            <div class="hist-stat-box">
+              <span class="hist-stat-num" id="histTodaySessions">0</span>
+              <span class="hist-stat-lbl">Today's Sessions</span>
+            </div>
+            <div class="hist-stat-box">
+              <span class="hist-stat-num" id="histTodayMinutes">0m</span>
+              <span class="hist-stat-lbl">Today's Focus</span>
+            </div>
+            <div class="hist-stat-box">
+              <span class="hist-stat-num" id="histAllTimeMinutes">0m</span>
+              <span class="hist-stat-lbl">All-Time Total</span>
+            </div>
+          </div>
+
+          <!-- Daywise History Log -->
+          <div class="history-full-log-wrap">
+            <div class="history-full-log-header">
+              <h4>📅 Full Daywise History Log</h4>
+            </div>
+            <div class="history-list" id="dailyHistoryList">
+              <!-- Dynamically populated day logs -->
+            </div>
+            <div class="history-actions" style="margin-top: 16px;">
+              <button type="button" id="clearHistoryBtn" class="btn-clear-history">Clear History</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Custom Timer Modal -->
+    <div id="customTimerModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-content card">
+        <div class="modal-header">
+          <h3 id="modalTitle">⚙️ Custom Timer Settings</h3>
+          <button id="closeModalBtn" class="btn-text" title="Close" aria-label="Close">✕</button>
+        </div>
+
+        <form id="customTimerForm" class="custom-timer-form">
+          <div class="form-group">
+            <div class="label-row">
+              <label for="customFocusInput">Deep Focus Duration</label>
+              <span class="input-unit-badge"><span id="valFocusLabel">25</span> min</span>
+            </div>
+            <div class="input-with-presets">
+              <input type="number" id="customFocusInput" min="1" max="180" value="25" required />
+              <div class="preset-chips">
+                <button type="button" class="preset-chip" data-target="customFocusInput" data-val="15">15m</button>
+                <button type="button" class="preset-chip" data-target="customFocusInput" data-val="25">25m</button>
+                <button type="button" class="preset-chip" data-target="customFocusInput" data-val="45">45m</button>
+                <button type="button" class="preset-chip" data-target="customFocusInput" data-val="60">60m</button>
+                <button type="button" class="preset-chip" data-target="customFocusInput" data-val="90">90m</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="customShortInput">Short Break Duration</label>
+              <span class="input-unit-badge"><span id="valShortLabel">5</span> min</span>
+            </div>
+            <div class="input-with-presets">
+              <input type="number" id="customShortInput" min="1" max="60" value="5" required />
+              <div class="preset-chips">
+                <button type="button" class="preset-chip" data-target="customShortInput" data-val="3">3m</button>
+                <button type="button" class="preset-chip" data-target="customShortInput" data-val="5">5m</button>
+                <button type="button" class="preset-chip" data-target="customShortInput" data-val="10">10m</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="customLongInput">Long Break Duration</label>
+              <span class="input-unit-badge"><span id="valLongLabel">15</span> min</span>
+            </div>
+            <div class="input-with-presets">
+              <input type="number" id="customLongInput" min="1" max="60" value="15" required />
+              <div class="preset-chips">
+                <button type="button" class="preset-chip" data-target="customLongInput" data-val="15">15m</button>
+                <button type="button" class="preset-chip" data-target="customLongInput" data-val="20">20m</button>
+                <button type="button" class="preset-chip" data-target="customLongInput" data-val="30">30m</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="resetDefaultsBtn" class="btn btn-secondary">Defaults</button>
+            <button type="submit" class="btn btn-primary">Save &amp; Apply</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Two-Tab Fixed Bottom Navigation Bar -->
+    <nav class="app-bottom-nav">
+      <button type="button" class="bottom-nav-tab active" data-tab="home" id="navTabHome" aria-label="Home Workspace">
+        <span class="nav-tab-icon">🏠</span>
+        <span class="nav-tab-label">Home</span>
+      </button>
+      <button type="button" class="bottom-nav-tab" data-tab="history" id="navTabHistory" aria-label="History and Stats">
+        <span class="nav-tab-icon">📊</span>
+        <span class="nav-tab-label">History</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
